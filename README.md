@@ -24,6 +24,15 @@ This is a simple Space Invaders game created using Python and the Pygame library
 
 - Run the game by executing the Python script, e.g., `python space_invaders.py`.
 
+- ## Features
+
+- Player control using left and right arrow keys.
+- Shoot bullets by pressing the spacebar.
+- Multiple enemy aliens moving horizontally and vertically.
+- Sound effects for shooting and enemy destruction.
+- Background music during gameplay.
+- Score tracking.
+
 - Controls:
 - Use the left and right arrow keys to move the player's spaceship.
 - Press the space bar to fire bullets.
