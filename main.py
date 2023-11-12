@@ -33,10 +33,10 @@ enemyX = []
 enemyY = []
 enemyX_change = []
 enemyY_change = []
-num_of_enemies = 4
+num_of_enemies = 8
 
 for i in range(num_of_enemies):
-    enemyImg.append(pygame.image.load('./images/alien.png'))  
+    enemyImg.append(pygame.image.load('./images/alien2.png'))  
     enemyX .append(random.randint(0, 755)) 
     enemyY .append(random.randint(50, 150))
     enemyX_change .append(-1) 
@@ -45,7 +45,7 @@ for i in range(num_of_enemies):
 #*Bullet
 bulletImg = pygame.image.load('./images/bullet.png')
 bulletX = 0 
-bulletY = 480
+bulletY = 450
 bulletX_change = 0
 bulletY_change = 10
 bullet_state = "ready"
