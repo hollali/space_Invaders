@@ -22,7 +22,7 @@ icon = pygame.image.load('./images/space.png')
 pygame.display.set_icon(icon)
 
 #* Player
-playerImg = pygame.image.load('./images/arcade-game(1).png')
+playerImg = pygame.image.load('./images/space-invaders.png')
 playerX = 380
 playerY = 480
 playerX_change = 0 
@@ -36,7 +36,7 @@ enemyY_change = []
 num_of_enemies = 8
 
 for i in range(num_of_enemies):
-    enemyImg.append(pygame.image.load('./images/alien2.png'))  
+    enemyImg.append(pygame.image.load('./images/alien2.png','./images/alien.png'))  
     enemyX .append(random.randint(0, 755)) 
     enemyY .append(random.randint(50, 150))
     enemyX_change .append(-1) 
@@ -85,7 +85,7 @@ def enemy (x , y, i):
 def  fire_bullet(x,y):
     global bullet_state
     bullet_state = "fire"
-    screen.blit(bulletImg,(x + 16, y + 10))
+    screen.blit(bulletImg,(x + 5, y + 10))
 
 #* Collision Functions
 def isCollision(enemyX,enemyY,bulletX,bulletY):
@@ -141,7 +141,7 @@ while running:
     for i in range (num_of_enemies):
 
         # Game Over
-        if enemyY[i] > 440:
+        if enemyY[i] > 475:
             for j in range (num_of_enemies):
                 enemyY[j] = 2000
             game_over_text()
@@ -166,6 +166,7 @@ while running:
             enemyY[i] = random.randint(50, 150)        
         
         enemy(enemyX[i], enemyY[i], i)
+        
     #*Bullet Movement
     if bulletY <= 0:
         bulletY = 480
@@ -179,4 +180,4 @@ while running:
 
     player(playerX,playerY)
     show_score(textX, textY)
-    pygame.display.update() 
+    pygame.display.update()   
