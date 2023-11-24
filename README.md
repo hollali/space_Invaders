@@ -51,6 +51,6 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 ## Author
 
-- [Hollali Kelivin]
+- Hollali Kelivin
 
 Feel free to modify this `readme.md` file to include more detailed information about your project, such as gameplay instructions, additional features, and acknowledgments. You can also include links to external sources or assets you've used in the game.
