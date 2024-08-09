@@ -17,12 +17,11 @@ This is a simple Space Invaders game created using Python and the Pygame library
 
 1. Make sure you have Python installed. If not, download and install it from [Python's official website](https://www.python.org/).
 
-2. Install the Pygame library using `pip`:
-
+2. Install the Pygame library using `pip` (pip install pygame):
 
 ## Usage
 
-- Run the game by executing the Python script, e.g., `python space_invaders.py`.
+- Run the game by executing the Python script ,`main.py`.
 
 - ## Features
 
