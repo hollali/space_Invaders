@@ -1,20 +1,20 @@
 # Space Invaders Game
 
-A Space Invaders game built with Python and Pygame. Defend Earth across 5 escalating
-levels against descending alien waves, bonus UFOs, and enemy fire — including a
-boss fight on the final level.
+A Space Invaders game built with Python and Pygame. Defend Earth across 5 worlds
+and 15 levels against descending alien waves, bonus UFOs, and enemy fire — including
+a boss fight at the end of each world.
 
 ## Features
 
 - Player control with arrows or WASD and hold-space rapid fire
-- **5 levels** with difficulty scaling, a victory screen, and a game-over state
+- **5 worlds × 3 levels each = 15 levels** with difficulty scaling, a victory screen, and a game-over state
 - **3 lives** with temporary invulnerability after being hit
 - Enemies shoot back; the wave advances toward you and ends the game if it reaches you
 - **3 alien types** with different point values and speeds; the wave speeds up as it thins out
 - **Bonus UFO** worth 100-300 points crossing the top of the screen
 - **Destructible bunkers** — 4 barriers that erode as they absorb fire from both sides
-- **Boss fight on level 5** — a large alien with a health bar that fires spread shots,
-  aims at you when enraged (below 1/3 HP), and is worth 1000 points
+- **Boss fights** — a unique boss at the end of each world with a health bar and
+  distinct attack patterns; bosses enrage (below 1/3 HP) with faster, aimed fire
 - **Power-ups** dropped by defeated enemies:
   - `R` rapid fire, `S` shield, `+` extra life, `B` bomb (clears the wave), `M` multishot (triple fire)
 - **High scores stored in a SQLite database** (`scores.db`) with a top-5 leaderboard

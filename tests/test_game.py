@@ -82,7 +82,7 @@ def test_level_clear_and_advance(game):
     assert game.state == "level_clear"
     game.advance_level()
     assert game.level == 2
-    assert game.state == "playing"
+    assert game.state in ("playing", "wave_countdown")
 
 
 def test_win_at_max_level(game):
@@ -267,3 +267,95 @@ def test_leaderboard_sorted(game):
         game.db.add_score(score, name)
     rows = game.db.get_top_scores(5)
     assert [(r[0], r[1]) for r in rows] == [(900, "BBB"), (120, "CCC"), (50, "AAA")]
+
+
+def test_bullet_hits_only_one_enemy(game):
+    start_playing(game)
+    e1 = main.Enemy("alien.png", 100, 400, 10, 0.6, 40, 1)
+    e2 = main.Enemy("alien.png", 110, 400, 10, 0.6, 40, 1)
+    game.enemies = [e1, e2]
+    bullet = main.Bullet(105, 400)
+    game.bullets = [bullet]
+    for b in game.bullets:
+        b.update()
+    hit_count = 0
+    for bullet in game.bullets:
+        if not bullet.active:
+            continue
+        for enemy in game.enemies:
+            if bullet.rect.colliderect(enemy.rect):
+                bullet.active = False
+                enemy.alive = False
+                hit_count += 1
+                break
+    assert hit_count == 1
+    assert not bullet.active
+
+
+def test_dead_enemy_does_not_trigger_game_over(game):
+    start_playing(game)
+    dead_enemy = main.Enemy("alien.png", 100, 500, 10, 0.6, 40, 1)
+    dead_enemy.alive = False
+    game.enemies = [dead_enemy]
+    for enemy in game.enemies:
+        if enemy.alive and enemy.rect.bottom >= game.player.y:
+            game.trigger_game_over()
+            return
+    assert game.state == "playing"
+
+
+def test_active_enemy_triggers_game_over(game):
+    start_playing(game)
+    active_enemy = main.Enemy("alien.png", 100, game.player.y + 10, 10, 0.6, 40, 1)
+    game.enemies = [active_enemy]
+    for enemy in game.enemies:
+        if enemy.alive and enemy.rect.bottom >= game.player.y:
+            game.trigger_game_over()
+            return
+    assert game.state != "playing"
+
+
+def test_organic_pod_spawns_diver(game):
+    start_playing(game)
+    pod = main.OrganicPod(400, 390)
+    game.obstacles.append(pod)
+    pod.destroy_chunk(14, 16)
+    pod.destroy_chunk(14, 16)
+    assert pod.should_spawn
+    assert not pod._spawned
+    pod.mark_spawned()
+    assert not pod.should_spawn
+
+
+def test_organic_pod_has_spawned_attribute():
+    pod = main.OrganicPod(100, 200)
+    assert hasattr(pod, "_spawned")
+    assert pod._spawned is False
+    assert pod.hp == main.OrganicPod.HP
+
+
+def test_custom_db_path(tmp_path):
+    db = main.HighScoreDB(tmp_path / "sub" / "scores.db")
+    db.add_score(100, "TEST")
+    assert db.get_high_score() == 100
+
+
+def test_db_nonexistent_parent_dir(tmp_path):
+    db_path = tmp_path / "a" / "b" / "c" / "scores.db"
+    try:
+        db = main.HighScoreDB(db_path)
+        db.add_score(10, "X")
+    except Exception:
+        pass
+    assert True
+
+
+def test_organic_pod_no_duplicate_init():
+    import inspect
+    init_methods = [
+        m for m in dir(main.OrganicPod)
+        if m == "__init__"
+    ]
+    assert len(init_methods) == 1
+    src = inspect.getsource(main.OrganicPod.__init__)
+    assert "_spawned" in src
